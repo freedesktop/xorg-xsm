@@ -100,7 +100,6 @@ extern Widget checkPointButton;
 extern Widget shutdownButton;
 extern Widget clientListWidget;
 extern Widget savePopup;
-extern XtSignalId sig_term_id, sig_usr1_id;
 
 extern int checkpoint_from_signal;
 
