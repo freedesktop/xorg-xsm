@@ -23,7 +23,17 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/auth.h,v 1.6 2001/12/14 20:02:23 dawes Exp $ */
 
-extern Status SetAuthentication ();
-extern void FreeAuthenticationData ();
-extern Bool HostBasedAuthProc ();
+#ifndef _AUTH_H_
+#define _AUTH_H_
+
+#include <X11/ICE/ICEutil.h>
+
+extern Bool HostBasedAuthProc(char *hostname);
+extern Status SetAuthentication(int count, IceListenObj *listenObjs, 
+				IceAuthDataEntry **authDataEntries);
+extern void FreeAuthenticationData(int count, 
+				   IceAuthDataEntry *authDataEntries);
+
+#endif

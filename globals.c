@@ -23,6 +23,7 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/globals.c,v 1.6 2001/12/14 20:02:25 dawes Exp $ */
 
 #include <X11/ICE/ICEutil.h>
 
@@ -35,6 +36,7 @@ List		*RestartAnywayList;
 List		*RestartImmedList;
 
 List		*WaitForSaveDoneList;
+List		*InitialSaveList;
 List		*FailedSaveList;
 List		*WaitForInteractList;
 List		*WaitForPhase2List;
@@ -86,3 +88,4 @@ Bool		remote_allowed;
 XtAppContext	appContext;
 Widget		topLevel;
 
+XtSignalId	sig_term_id, sig_usr1_id;

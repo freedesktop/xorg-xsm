@@ -23,6 +23,10 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/xsm.h,v 1.8 2001/12/14 20:02:27 dawes Exp $ */
+
+#ifndef _XSM_H_
+#define _XSM_H_
 
 #include <X11/Xos.h>
 #include <X11/Xfuncs.h>
@@ -56,9 +60,7 @@ in this Software without prior written authorization from The Open Group.
 #endif
 
 #include <ctype.h>
-#ifndef X_NOT_STDC_ENV
 #include <stdlib.h>
-#endif
 
 #include <X11/StringDefs.h>
 #include <X11/Intrinsic.h>
@@ -171,13 +173,20 @@ extern XtAppContext	appContext;
 extern Widget		topLevel;
 extern Widget		mainWindow;
 
-extern void fprintfhex ();
+extern void fprintfhex(FILE *fp, unsigned int len, char *cp);
+extern Status StartSession(char *name, Bool use_default);
+extern void EndSession(int status);
+extern void SetWM_DELETE_WINDOW(Widget widget, String delAction);
+extern void SetAllSensitive(Bool on);
+extern void FreeClient(ClientRec *client, Bool freeProps);
+extern void CloseDownClient(ClientRec *client);
 
-#ifndef X_NOT_STDC_ENV
+/* misc.c */
+extern int strbw(char *a, char *b);
+extern void nomem(void);
+
+
 #define Strstr strstr
-#else
-extern char *Strstr();
-#endif
 
 /* Fix ISC brain damage.  When using gcc fdopen isn't declared in <stdio.h>. */
 #if defined(ISC) && __STDC__
@@ -189,6 +198,21 @@ extern int System();
 #define system(s) System(s)
 #endif
 
+/* remote.c */
+extern void remote_start(char *restart_protocol, char *restart_machine, 
+			 char *program, char **args, char *cwd, char **env, 
+			 char *non_local_display_env, 
+			 char *non_local_session_env );
+
+/* signals.c */
+extern void sig_child_handler(void);
+extern void sig_term_handler(void);
+extern void sig_usr1_handler(void);
+extern void register_signals(XtAppContext);
+extern int execute_system_command(char *s);
+
 #ifdef XKB
 #include <X11/extensions/XKBbells.h>
 #endif
+
+#endif /* _XSM_H_ */

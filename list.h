@@ -23,6 +23,10 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/list.h,v 1.6 2001/12/14 20:02:25 dawes Exp $ */
+
+#ifndef _LIST_H_
+#define _LIST_H_
 
 typedef struct _List {
     struct _List	*prev;
@@ -30,13 +34,15 @@ typedef struct _List {
     char		*thing;
 } List;
 
-extern List *ListInit();
-extern List *ListFirst();
-extern List *ListNext();
-extern void ListFreeAll();
-extern void ListFreeAllButHead();
-extern void ListFreeOne();
-extern Status ListSearchAndFreeOne();
-extern List *ListAddFirst();
-extern List *ListAddLast();
-extern int ListCount();
+extern List *ListInit(void);
+extern List *ListFirst(List *l);
+extern List *ListNext(List *l);
+extern void ListFreeAll(List *l);
+extern void ListFreeAllButHead(List *l);
+extern List *ListAddFirst(List *l, char *v);
+extern List *ListAddLast(List *l, char *v);
+extern void ListFreeOne(List *e);
+extern Status ListSearchAndFreeOne(List *l, char *thing);
+extern int ListCount(List *l);
+
+#endif

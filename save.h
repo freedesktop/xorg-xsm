@@ -23,13 +23,30 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/save.h,v 1.6 2001/12/14 20:02:27 dawes Exp $ */
 
-extern void create_save_popup ();
-extern void SetSaveSensitivity ();
-extern void PopupSaveDialog ();
-extern void CheckPointXtProc ();
-extern void ShutdownSaveXtProc ();
-extern void ShutdownDontSaveXtProc ();
-extern void LetClientInteract ();
-extern void StartPhase2 ();
-extern void FinishUpSave ();
+#ifndef _SAVE_H_
+#define _SAVE_H_
+
+#include <X11/Intrinsic.h>
+#include "list.h"
+
+extern void DoSave(int saveType, int interactStyle, Bool fast);
+extern void LetClientInteract(List *cl);
+extern void StartPhase2(void);
+extern void FinishUpSave(void);
+extern void SetSaveSensitivity(Bool on);
+extern void SavePopupStructureNotifyXtHandler(Widget w, XtPointer closure, 
+					      XEvent *event, 
+					      Boolean *continue_to_dispatch);
+extern void create_save_popup(void);
+extern void PopupSaveDialog(void);
+extern void CheckPointXtProc(Widget w, XtPointer client_data, 
+			     XtPointer callData);
+extern void ShutdownSaveXtProc(Widget w, XtPointer client_data, 
+			       XtPointer callData);
+extern void PopupBadSave(void);
+extern void ShutdownDontSaveXtProc(Widget w, XtPointer client_data, 
+				   XtPointer callData);
+
+#endif

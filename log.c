@@ -23,10 +23,12 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/log.c,v 1.5 2001/12/14 20:02:26 dawes Exp $ */
 
 #include "xsm.h"
 #include "save.h"
 #include "popup.h"
+#include "log.h"
 
 #include <X11/Shell.h>
 #include <X11/Xaw/Form.h>
@@ -41,12 +43,7 @@ Widget	   logOkButton;
 
 
 void
-DisplayLogXtProc (w, client_data, callData)
-
-Widget	  w;
-XtPointer client_data;
-XtPointer callData;
-
+DisplayLogXtProc(Widget w, XtPointer client_data, XtPointer callData)
 {
     static int first_time = 1;
 
@@ -71,12 +68,7 @@ XtPointer callData;
 
 
 static void
-logOkXtProc (w, client_data, callData)
-
-Widget		w;
-XtPointer 	client_data;
-XtPointer 	callData;
-
+logOkXtProc(Widget w, XtPointer client_data, XtPointer callData)
 {
     XtPopdown (logPopup);
     client_log_visible = 0;
@@ -85,10 +77,7 @@ XtPointer 	callData;
 
 
 void
-add_log_text (str)
-
-char *str;
-
+add_log_text(char *str)
 {
     XawTextPosition pos = XawTextGetInsertionPoint (logText);
     XawTextBlock text;
@@ -104,13 +93,7 @@ char *str;
 
 
 static void
-DelLogWinAction (w, event, params, num_params)
-
-Widget w;
-XEvent *event;
-String *params;
-Cardinal *num_params;
-
+DelLogWinAction(Widget w, XEvent *event, String *params, Cardinal *num_params)
 {
     XtCallCallbacks (logOkButton, XtNcallback, NULL);
 }
@@ -118,7 +101,7 @@ Cardinal *num_params;
 
 
 void
-create_log_popup ()
+create_log_popup(void)
 
 {
     /*

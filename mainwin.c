@@ -23,11 +23,13 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/mainwin.c,v 1.5 2001/12/14 20:02:26 dawes Exp $ */
 
 #include "xsm.h"
 #include "info.h"
 #include "save.h"
 #include "log.h"
+#include "mainwin.h"
 
 #include <X11/Shell.h>
 #include <X11/Xaw/Form.h>
@@ -48,13 +50,7 @@ Widget       shutdownDontSave;
 
 
 static void
-DelMainWinAction (w, event, params, num_params)
-
-Widget w;
-XEvent *event;
-String *params;
-Cardinal *num_params;
-
+DelMainWinAction(Widget w, XEvent *event, String *params, Cardinal *num_params)
 {
     XtCallCallbacks (shutdownSave, XtNcallback, NULL);
 }
@@ -62,8 +58,7 @@ Cardinal *num_params;
 
 
 void
-create_main_window ()
-
+create_main_window (void)
 {
     /*
      * Main window

@@ -23,6 +23,7 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/misc.c,v 1.6 2001/12/14 20:02:26 dawes Exp $ */
 
 #include "xsm.h"
 
@@ -37,8 +38,7 @@ in this Software without prior written authorization from The Open Group.
  * called NAME.
  */
 int
-putenv(s)
-    char *s;
+putenv(char *s)
 {
     char *v;
     int varlen, idx;
@@ -95,46 +95,17 @@ putenv(s)
 
 
 
-strbw (a, b)
-
-char *a;
-char *b;
-
+int
+strbw(char *a, char *b)
 {
     return !strncmp (a, b, strlen (b));
 }
 
 
 
-#ifdef X_NOT_STDC_ENV
-
-char *Strstr (s1, s2)
-
-char *s1;
-char *s2;
-
-{
-    int n1, n2;
-
-    n1 = strlen (s1);
-    n2 = strlen (s2);
-
-    for (; n1 >= n2; s1++, n1--)
-    {
-	if (!strncmp (s1, s2, n2))
-	    return s1;
-    }
-
-    return NULL;
-}
-
-#endif
-
-
-
 #if defined(sun) && defined(SVR4)
-int System (s)
-    char *s;
+int 
+System(char *s)
 {
     int pid, status;
     if ((pid = fork ()) == 0) {
@@ -148,8 +119,8 @@ int System (s)
 
 
 
-nomem ()
-
+void
+nomem(void)
 {
     fprintf (stderr, "Insufficient memory.\n");
     exit (255);

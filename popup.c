@@ -27,23 +27,16 @@ other dealings in this Software without prior written authorization
 from The Open Group.
 
 */
+/* $XFree86: xc/programs/xsm/popup.c,v 1.5 2001/12/14 20:02:26 dawes Exp $ */
 
 #include "xsm.h"
 #include <X11/Shell.h>
+#include "popup.h"
 
 
 void
-PopupPopup (parent, popup, transient, first_time,
-    offset_x, offset_y, delAction)
-
-Widget parent;
-Widget popup;
-Bool transient;
-Bool first_time;
-int offset_x;
-int offset_y;
-String delAction;
-
+PopupPopup(Widget parent, Widget popup, Bool transient, Bool first_time,
+    int offset_x, int offset_y, String delAction)
 {
     if (!transient && !first_time)
     {

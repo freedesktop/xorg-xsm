@@ -23,17 +23,18 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/prop.c,v 1.5 2001/12/14 20:02:26 dawes Exp $ */
 
 #include "xsm.h"
+#include "info.h"
+#include "prop.h"
+#include <X11/Xaw/List.h>
 
 extern Widget clientListWidget;
 
 
 void
-FreePropValues (propValues)
-
-List *propValues;
-
+FreePropValues(List *propValues)
 {
     List	*pv;
     PropValue	*pval;
@@ -51,10 +52,7 @@ List *propValues;
 
 
 void
-FreeProp (prop)
-
-Prop *prop;
-
+FreeProp(Prop *prop)
 {
     FreePropValues (prop->values);
     XtFree (prop->name);
@@ -65,11 +63,7 @@ Prop *prop;
 
 
 void
-SetInitialProperties (client, props)
-
-ClientRec	*client;
-List		*props;
-
+SetInitialProperties(ClientRec *client, List *props)
 {
     List *pl;
 
@@ -129,12 +123,7 @@ List		*props;
 
 
 void
-SetProperty (client, theProp, freeIt)
-
-ClientRec	*client;
-SmProp		*theProp;
-Bool		freeIt;
-
+SetProperty(ClientRec *client, SmProp *theProp, Bool freeIt)
 {
     List 	*pl;
     Prop	*pprop = NULL;
@@ -232,11 +221,7 @@ Bool		freeIt;
 
 
 void
-DeleteProperty (client, propname)
-
-ClientRec	*client;
-char		*propname;
-
+DeleteProperty(ClientRec *client, char *propname)
 {
     List *pl;
 
@@ -271,13 +256,8 @@ char		*propname;
 
 
 void
-SetPropertiesProc (smsConn, managerData, numProps, props)
-
-SmsConn 	smsConn;
-SmPointer 	managerData;
-int		numProps;
-SmProp 		**props;
-
+SetPropertiesProc(SmsConn smsConn, SmPointer managerData, int numProps, 
+		  SmProp **props)
 {
     ClientRec	*client = (ClientRec *) managerData;
     int		updateList, i;
@@ -317,12 +297,8 @@ SmProp 		**props;
 
 
 void
-DeletePropertiesProc (smsConn, managerData, numProps, propNames)
-
-SmsConn 	smsConn;
-SmPointer 	managerData;
-int		numProps;
-char		**propNames;
+DeletePropertiesProc(SmsConn smsConn, SmPointer managerData, 
+		     int numProps, char **propNames)
 
 {
     ClientRec	*client = (ClientRec *) managerData;
@@ -350,11 +326,7 @@ char		**propNames;
 
 
 void
-GetPropertiesProc (smsConn, managerData)
-
-SmsConn 	smsConn;
-SmPointer 	managerData;
-
+GetPropertiesProc(SmsConn smsConn, SmPointer managerData)
 {
     ClientRec	*client = (ClientRec *) managerData;
     SmProp	**propsRet, *propRet;
