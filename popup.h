@@ -27,7 +27,7 @@ other dealings in this Software without prior written authorization
 from The Open Group.
 
 */
-/* $XFree86: xc/programs/xsm/popup.h,v 1.6 2001/12/14 20:02:26 dawes Exp $ */
+/* $XFree86$ */
 
 #ifndef _POPUP_H_
 #define _POPUP_H_
