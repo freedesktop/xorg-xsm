@@ -27,5 +27,15 @@ other dealings in this Software without prior written authorization
 from The Open Group.
 
 */
+/* $XFree86: xc/programs/xsm/popup.h,v 1.6 2001/12/14 20:02:26 dawes Exp $ */
 
-extern void PopupPopup ();
+#ifndef _POPUP_H_
+#define _POPUP_H_
+
+#include <X11/Intrinsic.h>
+
+extern void PopupPopup(Widget parent, Widget popup, Bool transient, 
+		       Bool first_time, int offset_x, int offset_y, 
+		       String delAction);
+
+#endif

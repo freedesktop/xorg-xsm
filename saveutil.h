@@ -23,7 +23,17 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/saveutil.h,v 1.7 2001/12/14 20:02:27 dawes Exp $ */
 
-extern int ReadSave ();
-extern void WriteSave ();
-extern Status DeleteSession ();
+#ifndef _SAVEUTIL_H_
+#define _SAVEUTIL_H_
+
+#include <stdio.h>
+
+extern void set_session_save_file_name(char *session_name);
+extern int ReadSave(char *session_name, char **sm_id);
+extern void WriteSave(char *sm_id);
+extern Status DeleteSession(char *session_name);
+extern Bool getnextline(char **pbuf, int *plen, FILE *f);
+
+#endif

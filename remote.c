@@ -23,35 +23,27 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/remote.c,v 1.5 2001/12/14 20:02:26 dawes Exp $ */
 
 /*
  * We use the rstart protocol to restart clients on remote machines.
  */
 
 #include "xsm.h"
+#include "log.h"
 
 #include <X11/ICE/ICEutil.h>
 
-static char 		*format_rstart_env();
+static char 		*format_rstart_env(char *str);
 
 extern IceAuthDataEntry	*authDataEntries;
 extern int		numTransports;
-extern void		fprintfhex ();
 
 
 void
-remote_start (restart_protocol, restart_machine, program, args, cwd, env,
-    non_local_display_env, non_local_session_env)
-
-char	*restart_protocol;
-char	*restart_machine;
-char	*program;
-char	**args;
-char	*cwd;
-char	**env;
-char	*non_local_display_env;
-char	*non_local_session_env;
-
+remote_start(char *restart_protocol, char *restart_machine, char *program, 
+	     char **args, char *cwd, char **env,
+	     char *non_local_display_env, char *non_local_session_env)
 {
     FILE *fp;
     int	 pipefd[2];
@@ -211,10 +203,7 @@ char	*non_local_session_env;
  */
 
 static char *
-format_rstart_env (str)
-
-char *str;
-
+format_rstart_env(char *str)
 {
     int escape_count = 0, i;
     char *temp = str;

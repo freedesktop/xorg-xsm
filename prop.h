@@ -23,12 +23,22 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/prop.h,v 1.6 2001/12/14 20:02:26 dawes Exp $ */
 
-extern void FreePropValues ();
-extern void FreeProp ();
-extern void SetInitialProperties ();
-extern void SetProperty ();
-extern void DeleteProperty ();
-extern void SetPropertiesProc ();
-extern void DeletePropertiesProc ();
-extern void GetPropertiesProc ();
+#ifndef _PROP_H_
+#define _PROP_H_
+
+#include "xsm.h"
+
+extern void FreePropValues(List *propValues);
+extern void FreeProp(Prop *prop);
+extern void SetInitialProperties(ClientRec *client, List *props);
+extern void SetProperty(ClientRec *client, SmProp *theProp, Bool freeIt);
+extern void DeleteProperty(ClientRec *client, char *propname);
+extern void SetPropertiesProc(SmsConn smsConn, SmPointer managerData, 
+			      int numProps, SmProp **props);
+extern void DeletePropertiesProc(SmsConn smsConn, SmPointer managerData, 
+				 int numProps, char **propNames);
+extern void GetPropertiesProc(SmsConn smsConn, SmPointer managerData);
+
+#endif

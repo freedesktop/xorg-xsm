@@ -23,40 +23,34 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/xtwatch.c,v 1.5 2001/12/14 20:02:28 dawes Exp $ */
 
 #include <X11/ICE/ICElib.h>
 #include <X11/Intrinsic.h>
 #include "xsm.h"
+#include "xtwatch.h"
 
-extern void CloseDownClient ();
-
+static void _XtIceWatchProc(IceConn ice_conn, IcePointer client_data, 
+			    Bool opening, IcePointer *watch_data );
+static void _XtProcessIceMsgProc(XtPointer client_data, int *source, 
+				 XtInputId *id);
 
 
 Status
-InitWatchProcs (appContext)
-
-XtAppContext appContext;
-
+InitWatchProcs(XtAppContext appContext)
 {
-    void _XtIceWatchProc ();
 
     return (IceAddConnectionWatch (_XtIceWatchProc, (IcePointer) appContext));
 }
 
 
-void
-_XtIceWatchProc (ice_conn, client_data, opening, watch_data)
-
-IceConn 	ice_conn;
-IcePointer	client_data;
-Bool		opening;
-IcePointer	*watch_data;
-
+static void
+_XtIceWatchProc(IceConn ice_conn, IcePointer client_data, Bool opening, 
+		IcePointer *watch_data)
 {
     if (opening)
     {
 	XtAppContext appContext = (XtAppContext) client_data;
-	void _XtProcessIceMsgProc ();
 
 	*watch_data = (IcePointer) XtAppAddInput (
 	    appContext,
@@ -72,13 +66,8 @@ IcePointer	*watch_data;
 }
 
 
-void
-_XtProcessIceMsgProc (client_data, source, id)
-
-XtPointer	client_data;
-int 		*source;
-XtInputId	*id;
-
+static void
+_XtProcessIceMsgProc(XtPointer client_data, int *source, XtInputId *id)
 {
     IceConn			ice_conn = (IceConn) client_data;
     IceProcessMessagesStatus	status;

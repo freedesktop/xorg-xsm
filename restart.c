@@ -23,11 +23,14 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/restart.c,v 1.6 2001/12/14 20:02:26 dawes Exp $ */
 
 #include "xsm.h"
 #include "log.h"
+#include "restart.h"
+#include "saveutil.h"
 
-extern void remote_start ();
+extern char **environ;
 
 
 /*
@@ -36,10 +39,7 @@ extern void remote_start ();
  */
 
 Bool
-CheckIsManager (program)
-
-char *program;
-
+CheckIsManager(char *program)
 {
     return (strcmp (program, "twm") == 0);
 }
@@ -77,15 +77,8 @@ char *program;
  */
 
 void
-GetRestartInfo (restart_service_prop, client_host_name,
-    run_local, restart_protocol, restart_machine)
-
-char *restart_service_prop;
-char *client_host_name;
-Bool *run_local;
-char **restart_protocol;
-char **restart_machine;
-
+GetRestartInfo(char *restart_service_prop, char *client_host_name,
+    Bool *run_local, char **restart_protocol, char **restart_machine)
 {
     char hostnamebuf[80];
     char *temp;
@@ -149,10 +142,7 @@ char **restart_machine;
  */
 
 Status
-Restart (flag)
-
-int flag;
-
+Restart(int flag)
 {
     List 	*cl, *pl, *vl;
     PendingClient *c;
@@ -163,7 +153,6 @@ int flag;
     char	**env;
     char	**pp;
     int		cnt;
-    extern char **environ;
     char	*p;
     char	*restart_service_prop;
     char	*restart_protocol;
@@ -349,18 +338,13 @@ int flag;
  */
 
 void
-Clone (client, useSavedState)
-
-ClientRec *client;
-Bool useSavedState;
-
+Clone(ClientRec *client, Bool useSavedState)
 {
     char	*cwd;
     char	*program;
     char	**args;
     char	**env;
     char	**pp;
-    extern char **environ;
     char	*p;
     char	*restart_service_prop;
     char	*restart_protocol;
@@ -531,8 +515,7 @@ Bool useSavedState;
 
 
 void
-StartDefaultApps ()
-
+StartDefaultApps (void)
 {
     FILE *f;
     char *buf, *p, *home, filename[128];
@@ -563,7 +546,7 @@ StartDefaultApps ()
     buf = NULL;
     buflen = 0;
 
-    while (getline(&buf, &buflen, f))
+    while (getnextline(&buf, &buflen, f))
     {
 	char logtext[256];
 
@@ -593,8 +576,7 @@ StartDefaultApps ()
 
 
 void
-StartNonSessionAwareApps ()
-
+StartNonSessionAwareApps(void)
 {
     char logtext[256];
     int i;

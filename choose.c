@@ -23,10 +23,12 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/choose.c,v 1.5 2001/12/14 20:02:24 dawes Exp $ */
 
 #include "xsm.h"
 #include "saveutil.h"
 #include "lock.h"
+#include "choose.h"
 #include <sys/types.h>
 
 #include <X11/Shell.h>
@@ -71,13 +73,8 @@ Widget chooseSessionCancelButton;
 
 
 int
-GetSessionNames (count_ret, short_names_ret, long_names_ret, locked_ret)
-
-int *count_ret;
-String **short_names_ret;
-String **long_names_ret;
-Bool **locked_ret;
-
+GetSessionNames(int *count_ret, String **short_names_ret, 
+		String **long_names_ret, Bool **locked_ret)
 {
     DIR *dir;
     struct dirent *entry;
@@ -132,7 +129,7 @@ Bool **locked_ret;
 	{
 	    char *name = (char *) entry->d_name + 5;
 	    char *id = NULL;
-	    Bool locked = CheckSessionLocked (name, long_names_ret, &id);
+	    Bool locked = CheckSessionLocked (name, long_names_ret!=NULL, &id);
 
 	    (*short_names_ret)[*count_ret] = XtNewString (name);
 	    (*locked_ret)[*count_ret] = locked;
@@ -174,13 +171,8 @@ Bool **locked_ret;
 
 
 void
-FreeSessionNames (count, namesShort, namesLong, lockFlags)
-
-int count;
-String *namesShort;
-String *namesLong;
-Bool *lockFlags;
-
+FreeSessionNames(int count, String *namesShort, String *namesLong, 
+		 Bool *lockFlags)
 {
     int i;
 
@@ -202,11 +194,7 @@ Bool *lockFlags;
 
 
 static void
-SessionSelected (number, highlight)
-
-int number;
-Bool highlight;
-
+SessionSelected(int number, Bool highlight)
 {
     if (number >= 0)
     {
@@ -230,11 +218,7 @@ Bool highlight;
 
 
 static void
-AddSessionNames (count, names)
-
-int count;
-String *names;
-
+AddSessionNames(int count, String *names)
 {
     int i;
 
@@ -254,13 +238,9 @@ String *names;
 
 
 void
-ChooseWindowStructureNotifyXtHandler (w, closure, event, continue_to_dispatch)
-
-Widget w;
-XtPointer closure;
-XEvent *event;
-Boolean *continue_to_dispatch;
-
+ChooseWindowStructureNotifyXtHandler(Widget w, XtPointer closure, 
+				     XEvent *event, 
+				     Boolean *continue_to_dispatch)
 {
     if (event->type == MapNotify)
     {
@@ -284,8 +264,7 @@ Boolean *continue_to_dispatch;
 
 
 void
-ChooseSession ()
-
+ChooseSession(void)
 {
     Dimension   width, height;
     Position	x, y;
@@ -348,8 +327,7 @@ ChooseSession ()
 
 
 static void
-CheckDeleteCancel ()
-
+CheckDeleteCancel (void)
 {
     if (delete_session_phase > 0)
     {
@@ -363,8 +341,7 @@ CheckDeleteCancel ()
 
 
 static void
-CheckBreakLockCancel ()
-
+CheckBreakLockCancel(void)
 {
     if (break_lock_phase > 0)
     {
@@ -379,13 +356,7 @@ CheckBreakLockCancel ()
 
 
 static void
-ChooseSessionUp (w, event, params, numParams)
-
-Widget w;
-XEvent *event;
-String *params;
-Cardinal *numParams;
-
+ChooseSessionUp(Widget w, XEvent *event, String *params, Cardinal *numParams)
 {
     XawListReturnStruct *current;
     
@@ -400,13 +371,7 @@ Cardinal *numParams;
 
 
 static void
-ChooseSessionDown (w, event, params, numParams)
-
-Widget w;
-XEvent *event;
-String *params;
-Cardinal *numParams;
-
+ChooseSessionDown(Widget w, XEvent *event, String *params, Cardinal *numParams)
 {
     XawListReturnStruct *current;
     
@@ -422,13 +387,8 @@ Cardinal *numParams;
 
 
 static void
-ChooseSessionBtn1Down (w, event, params, numParams)
-
-Widget w;
-XEvent *event;
-String *params;
-Cardinal *numParams;
-
+ChooseSessionBtn1Down(Widget w, XEvent *event, String *params, 
+		      Cardinal *numParams)
 {
     XawListReturnStruct *current;
 
@@ -443,12 +403,7 @@ Cardinal *numParams;
 
 
 static void
-ChooseSessionLoadXtProc (w, client_data, callData)
-
-Widget		w;
-XtPointer 	client_data;
-XtPointer 	callData;
-
+ChooseSessionLoadXtProc(Widget w, XtPointer client_data, XtPointer callData)
 {
     XawListReturnStruct *current;
 
@@ -497,12 +452,7 @@ XtPointer 	callData;
 
 
 static void
-ChooseSessionDeleteXtProc (w, client_data, callData)
-
-Widget		w;
-XtPointer 	client_data;
-XtPointer 	callData;
-
+ChooseSessionDeleteXtProc(Widget w, XtPointer client_data, XtPointer callData)
 {
     XawListReturnStruct *current;
     int longest;
@@ -596,12 +546,8 @@ XtPointer 	callData;
 
 
 static void
-ChooseSessionBreakLockXtProc (w, client_data, callData)
-
-Widget		w;
-XtPointer 	client_data;
-XtPointer 	callData;
-
+ChooseSessionBreakLockXtProc(Widget w, XtPointer client_data, 
+			     XtPointer callData)
 {
     XawListReturnStruct *current;
     char *name;
@@ -674,12 +620,8 @@ XtPointer 	callData;
 
 
 static void
-ChooseSessionFailSafeXtProc (w, client_data, callData)
-
-Widget		w;
-XtPointer 	client_data;
-XtPointer 	callData;
-
+ChooseSessionFailSafeXtProc(Widget w, XtPointer client_data, 
+			    XtPointer callData)
 {
     /*
      * Pop down choice of sessions, and start the fail safe session.
@@ -713,12 +655,7 @@ XtPointer 	callData;
 
 
 static void
-ChooseSessionCancelXtProc (w, client_data, callData)
-
-Widget		w;
-XtPointer 	client_data;
-XtPointer 	callData;
-
+ChooseSessionCancelXtProc(Widget w, XtPointer client_data, XtPointer callData)
 {
     if (delete_session_phase > 0 || break_lock_phase > 0)
     {
@@ -736,7 +673,7 @@ XtPointer 	callData;
 
 
 void
-create_choose_session_popup ()
+create_choose_session_popup(void)
 
 {
     static XtActionsRec choose_actions[] = {

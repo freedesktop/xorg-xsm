@@ -23,20 +23,19 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 ******************************************************************************/
+/* $XFree86: xc/programs/xsm/saveutil.c,v 1.6 2001/12/14 20:02:27 dawes Exp $ */
 
 #include "xsm.h"
+#include "log.h"
+#include "saveutil.h"
 
 char 		 session_save_file[PATH_MAX];
-Bool	 	 getline();
 
 extern Widget manualRestartCommands;
 
 
 void
-set_session_save_file_name (session_name)
-
-char *session_name;
-
+set_session_save_file_name(char *session_name)
 {
     char *p;
 
@@ -56,17 +55,13 @@ char *session_name;
 
 
 int
-ReadSave(session_name, sm_id)
-
-char *session_name;
-char **sm_id;
-
+ReadSave(char *session_name, char **sm_id)
 {
     char		*buf;
     int			buflen;
     char		*p;
-    PendingClient	*c;
-    Prop		*prop;
+    PendingClient	*c = NULL;
+    Prop		*prop = NULL;
     PropValue		*val;
     FILE		*f;
     int			state, i;
@@ -86,7 +81,7 @@ char **sm_id;
     buflen = 0;
 
     /* Read version # */
-    getline(&buf, &buflen, f);
+    getnextline(&buf, &buflen, f);
     if((p = strchr(buf, '\n'))) *p = '\0';
     version_number = atoi (buf);
     if (version_number > SAVEFILE_VERSION)
@@ -100,20 +95,20 @@ char **sm_id;
     }
 
     /* Read SM's id */
-    getline(&buf, &buflen, f);
+    getnextline(&buf, &buflen, f);
     if((p = strchr(buf, '\n'))) *p = '\0';
     *sm_id = XtNewString(buf);
 
     /* Read number of clients running in the last session */
     if (version_number >= 2)
     {
-	getline(&buf, &buflen, f);
+	getnextline(&buf, &buflen, f);
 	if((p = strchr(buf, '\n'))) *p = '\0';
 	num_clients_in_last_session = atoi (buf);
     }
 
     state = 0;
-    while(getline(&buf, &buflen, f)) {
+    while(getnextline(&buf, &buflen, f)) {
 	if((p = strchr(buf, '\n'))) *p = '\0';
 	for(p = buf; *p && isspace(*p); p++) /* LOOP */;
 	if(*p == '#') continue;
@@ -213,7 +208,7 @@ char **sm_id;
 	String strbuf;
 	int bufsize = 0;
 
-	getline(&buf, &buflen, f);
+	getnextline(&buf, &buflen, f);
 	if((p = strchr(buf, '\n'))) *p = '\0';
 	non_session_aware_count = atoi (buf);
 
@@ -224,7 +219,7 @@ char **sm_id;
 
 	    for (i = 0; i < non_session_aware_count; i++)
 	    {
-		getline(&buf, &buflen, f);
+		getnextline(&buf, &buflen, f);
 		if((p = strchr(buf, '\n'))) *p = '\0';
 		non_session_aware_clients[i] = (char *) malloc (
 		    strlen (buf) + 2);
@@ -260,11 +255,7 @@ char **sm_id;
 
 
 static void
-SaveClient (f, client)
-
-FILE	  *f;
-ClientRec *client;
-
+SaveClient(FILE *f, ClientRec *client)
 {
     List *pl;
 
@@ -297,7 +288,7 @@ ClientRec *client;
 	    for (pj = ListFirst (pprop->values); pj; pj = ListNext (pj))
 	    {
 		pval = (PropValue *) pj->thing;
-		fprintf (f, "\t%s\n", pval->value);
+		fprintf (f, "\t%s\n", (char *)pval->value);
 	    }
 	}
     }
@@ -308,10 +299,7 @@ ClientRec *client;
 
 
 void
-WriteSave (sm_id)
-
-char *sm_id;
-
+WriteSave(char *sm_id)
 {
     ClientRec *client;
     FILE *f;
@@ -419,10 +407,7 @@ char *sm_id;
 
 
 Status
-DeleteSession (session_name)
-
-char *session_name;
-
+DeleteSession(char *session_name)
 {
     char	*buf;
     int		buflen;
@@ -452,7 +437,7 @@ char *session_name;
     buflen = 0;
 
     /* Read version # */
-    getline(&buf, &buflen, f);
+    getnextline(&buf, &buflen, f);
     if((p = strchr(buf, '\n'))) *p = '\0';
     version_number = atoi (buf);
     if (version_number > SAVEFILE_VERSION)
@@ -465,15 +450,15 @@ char *session_name;
     }
 
     /* Skip SM's id */
-    getline(&buf, &buflen, f);
+    getnextline(&buf, &buflen, f);
 
     /* Skip number of clients running in the last session */
     if (version_number >= 2)
-	getline(&buf, &buflen, f);
+	getnextline(&buf, &buflen, f);
 
     state = 0;
     foundDiscard = 0;
-    while(getline(&buf, &buflen, f)) {
+    while(getnextline(&buf, &buflen, f)) {
 	if((p = strchr(buf, '\n'))) *p = '\0';
 	for(p = buf; *p && isspace(*p); p++) /* LOOP */;
 	if(*p == '#') continue;
@@ -531,10 +516,7 @@ char *session_name;
 
 
 Bool
-getline(pbuf, plen, f)
-char	**pbuf;
-int	*plen;
-FILE	*f;
+getnextline(char **pbuf, int *plen, FILE *f)
 {
 	int c;
 	int i;
