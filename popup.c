@@ -27,7 +27,7 @@ other dealings in this Software without prior written authorization
 from The Open Group.
 
 */
-/* $XFree86$ */
+/* $XFree86: xc/programs/xsm/popup.c,v 1.5 2001/12/14 20:02:26 dawes Exp $ */
 
 #include "xsm.h"
 #include <X11/Shell.h>
