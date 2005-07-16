@@ -57,6 +57,9 @@ fi
 #endif
 #endif
 
+AC_CHECK_FUNC([mkstemp], 
+   AC_DEFINE(HAS_MKSTEMP,1,[Define to 1 if you have the `mkstemp' function.]))
+
 # Checks for pkg-config packages
 XAW_CHECK_XPRINT_SUPPORT(DEP)
 
