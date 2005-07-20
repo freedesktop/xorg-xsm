@@ -24,10 +24,10 @@ bin_PROGRAMS = xsm
 SYSTEM_INIT_DIR = $(libdir)/X11/xsm
 
 
-xsm_CFLAGS = $(DEP_CFLAGS) -DRSHCMD=\"@RSH@\" \
+xsm_CFLAGS = $(XSM_CFLAGS) -DRSHCMD=\"@RSH@\" \
 	-DSYSTEM_INIT_FILE=\"$(SYSTEM_INIT_DIR)/system.xsm\"
 
-xsm_LDADD = $(DEP_LIBS)
+xsm_LDADD = $(XSM_LIBS)
 
 xsm_SOURCES =	\
         auth.c \
