@@ -89,7 +89,7 @@ systeminit_DATA = system.xsm
 
 #
 
-EXTRA_DIST = $(foreach FILE, $(APPDEFAULTFILES), $(FILE).ad) globals.c system.xsm
+EXTRA_DIST = $(APPDEFAULTFILES:%=%.ad) globals.c system.xsm
 
 CLEANFILES = $(APPDEFAULTFILES)
 
