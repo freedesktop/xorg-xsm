@@ -63,7 +63,7 @@ xsm_SOURCES =	\
         xtwatch.c \
         xtwatch.h
 
-dist_man_MANS = \
+dist_man1_MANS = \
         xsm.man
 
 # App default files  (*.ad)
