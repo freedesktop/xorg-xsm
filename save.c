@@ -147,7 +147,7 @@ MakeCurrentSession(String new_name, Bool name_changed)
 
     LockSession (session_name, True);
 
-    sprintf (title, "xsm: %s", session_name);
+    snprintf (title, sizeof(title), "xsm: %s", session_name);
 
     XtVaSetValues (topLevel,
 	XtNtitle, title,
@@ -413,7 +413,7 @@ SaveOkXtProc(Widget w, XtPointer client_data, XtPointer callData)
 	    {
 		name_locked = True;
 
-		sprintf (label, "Another session by the name '%s' is active.\nChoose another name for the session.", name);
+		snprintf (label, sizeof(label), "Another session by the name '%s' is active.\nChoose another name for the session.", name);
 
 		XtUnmanageChild (nameInUseOverwriteButton);
 

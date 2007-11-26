@@ -358,7 +358,8 @@ SetWM_DELETE_WINDOW(Widget widget, String delAction)
 {
     char translation[64];
 
-    sprintf (translation, "<Message>WM_PROTOCOLS: %s", delAction);
+    snprintf (translation, sizeof(translation),
+	      "<Message>WM_PROTOCOLS: %s", delAction);
     XtOverrideTranslations (widget, XtParseTranslationTable (translation));
 
     XSetWMProtocols (XtDisplay(widget), XtWindow (widget),
@@ -495,7 +496,7 @@ StartSession(char *name, Bool use_default)
      * Set the main window's title to the session name.
      */
 
-    sprintf (title, "xsm: %s", name);
+    snprintf (title, sizeof(title), "xsm: %s", name);
 
     XtVaSetValues (topLevel,
 	XtNtitle, title,		/* session name */

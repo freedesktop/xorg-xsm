@@ -70,8 +70,9 @@ remote_start(char *restart_protocol, char *restart_machine, char *program,
 
     if (pipe (pipefd) < 0)
     {
-	sprintf (msg, "%s: pipe() error during remote start of %s",
-	    Argv[0], program);
+	snprintf (msg, sizeof(msg),
+		  "%s: pipe() error during remote start of %s",
+		  Argv[0], program);
 	add_log_text (msg);
 	perror (msg);
     }
@@ -81,8 +82,9 @@ remote_start(char *restart_protocol, char *restart_machine, char *program,
 	{
 	case -1:
 
-	    sprintf (msg, "%s: fork() error during remote start of %s",
-		Argv[0], program);
+	    snprintf (msg, sizeof(msg),
+		      "%s: fork() error during remote start of %s",
+		      Argv[0], program);
 	    add_log_text (msg);
 	    perror (msg);
 	    break;
@@ -96,9 +98,9 @@ remote_start(char *restart_protocol, char *restart_machine, char *program,
 
 	    execlp (RSHCMD, restart_machine, "rstartd", (char *) 0);
 
-	    sprintf (msg,
-	        "%s: execlp() of rstartd failed for remote start of %s",
-		Argv[0], program);
+	    snprintf (msg, sizeof(msg),
+		      "%s: execlp() of rstartd failed for remote start of %s",
+		      Argv[0], program);
 	    perror (msg);
 	    /*
 	     * TODO : We would like to send this log information to the
@@ -228,8 +230,8 @@ format_rstart_env(char *str)
 	{
 	    if (!isgraph (*temp) || *temp == '\\')
 	    {
-		char octal[3];
-		sprintf (octal, "%o", *temp);
+		char octal[4];
+		snprintf (octal, sizeof(octal), "%o", *temp);
 		*(ptr++) = '\\';
 		for (i = 0; i < (3 - (int) strlen (octal)); i++)
 		    *(ptr++) = '0';

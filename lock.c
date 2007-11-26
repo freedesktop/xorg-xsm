@@ -59,10 +59,13 @@ LockSession(char *session_name, Bool write_id)
     path = GetPath ();
 
 #ifndef __UNIXOS2__
-    sprintf (lock_file, "%s/.XSMlock-%s", path, session_name);
-    sprintf (temp_lock_file, "%s/.XSMtlock-%s", path, session_name);
+    snprintf (lock_file, sizeof(lock_file), "%s/.XSMlock-%s",
+	      path, session_name);
+    snprintf (temp_lock_file, sizeof(temp_lock_file), "%s/.XSMtlock-%s",
+	      path, session_name);
 #else
-    sprintf (temp_lock_file, "%s/%s.slk", path, session_name);
+    snprintf (temp_lock_file, sizeof(temp_lock_file), "%s/%s.slk",
+	      path, session_name);
 #endif
 
     if ((fd = creat (temp_lock_file, 0444)) < 0)
@@ -84,7 +87,7 @@ LockSession(char *session_name, Bool write_id)
     if (link (temp_lock_file, lock_file) < 0)
 	status = 0;
 
-    if (unlink (temp_lock_file) < 0)
+    if (remove (temp_lock_file) < 0)
 	status = 0;
 #else
     status = 0;
@@ -102,9 +105,10 @@ UnlockSession(char *session_name)
 
     path = GetPath ();
 
-    sprintf (lock_file, "%s/.XSMlock-%s", path, session_name);
+    snprintf (lock_file, sizeof(lock_file), "%s/.XSMlock-%s",
+	      path, session_name);
 
-    unlink (lock_file);
+    remove (lock_file);
 }
 
 
@@ -119,7 +123,8 @@ GetLockId(char *session_name)
 
     path = GetPath ();
 
-    sprintf (lock_file, "%s/.XSMlock-%s", path, session_name);
+    snprintf (lock_file, sizeof(lock_file), "%s/.XSMlock-%s",
+	      path, session_name);
 
     if ((fp = fopen (lock_file, "r")) == NULL)
     {

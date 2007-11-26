@@ -165,7 +165,7 @@ DisplayProps(ClientRec *client)
 	    AppendStr (&buffer, pprop->type);
 	    AppendStr (&buffer, "\n");
 	    AppendStr (&buffer, "Num values:	");
-	    sprintf (number, "%d", ListCount (pprop->values));
+	    snprintf (number, sizeof(number), "%d", ListCount (pprop->values));
 	    AppendStr (&buffer, number);
 	    AppendStr (&buffer, "\n");
 
@@ -181,7 +181,7 @@ DisplayProps(ClientRec *client)
 		value = *card8;
 
 		AppendStr (&buffer, "Value 1:	");
-		sprintf (number, "%d", value);
+		snprintf (number, sizeof(number), "%d", value);
 		AppendStr (&buffer, number);
 
 		if (strcmp (pprop->name, SmRestartStyleHint) == 0)
@@ -208,7 +208,7 @@ DisplayProps(ClientRec *client)
 
 		    pval = (PropValue *) pj->thing;
 		    AppendStr (&buffer, "Value ");
-		    sprintf (number, "%d", propnum);
+		    snprintf (number, sizeof(number), "%d", propnum);
 		    AppendStr (&buffer, number);
 		    AppendStr (&buffer, ":	");
 		    AppendStr (&buffer, (char *) pval->value);
