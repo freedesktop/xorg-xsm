@@ -210,9 +210,11 @@ extern void remote_start(char *restart_protocol, char *restart_machine,
 			 char *non_local_session_env );
 
 /* signals.c */
-extern void sig_child_handler(void);
-extern void sig_term_handler(void);
-extern void sig_usr1_handler(void);
+extern void sig_child_handler(int sig);
+extern void sig_term_handler(int sig);
+extern void sig_usr1_handler(int sig);
+extern void xt_sig_term_handler(XtPointer closure, XtSignalId *id);
+extern void xt_sig_usr1_handler(XtPointer closure, XtSignalId *id);
 extern void register_signals(XtAppContext);
 extern int execute_system_command(char *s);
 
