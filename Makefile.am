@@ -72,7 +72,7 @@ appdefaultdir = @appdefaultdir@
 
 
 APPDEFAULTFILES = \
-        XSm
+        app-defaults/XSm
 
 SUFFIXES = .ad
 
