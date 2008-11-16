@@ -31,7 +31,6 @@ AM_CONFIG_HEADER(config.h)
 AC_PROG_CC
 AC_PROG_INSTALL
 
-RSH=
 if [[ -z $RSH ]] ; then
    AC_PATH_PROG(RSH,rsh)
 fi
