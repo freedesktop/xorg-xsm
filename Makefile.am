@@ -66,21 +66,12 @@ xsm_SOURCES =	\
 appman_PRE = \
         xsm.man
 
-# App default files  (*.ad)
+# App default files
 
 appdefaultdir = @appdefaultdir@
 
-
-APPDEFAULTFILES = \
+dist_appdefault_DATA = \
         app-defaults/XSm
-
-SUFFIXES = .ad
-
-.ad:
-	[ -d app-defaults ] || mkdir app-defaults
-	cp $< $@
-
-appdefault_DATA = $(APPDEFAULTFILES)
 
 # system init file
 
@@ -90,9 +81,7 @@ systeminit_DATA = system.xsm
 
 #
 
-EXTRA_DIST = $(APPDEFAULTFILES:%=%.ad) globals.c system.xsm
-
-CLEANFILES = $(APPDEFAULTFILES)
+EXTRA_DIST = globals.c system.xsm
 
 
 appmandir = $(APP_MAN_DIR)
@@ -100,7 +89,7 @@ appmandir = $(APP_MAN_DIR)
 appman_DATA = $(appman_PRE:man=@APP_MAN_SUFFIX@)
 
 EXTRA_DIST += $(appman_PRE)
-CLEANFILES += $(appman_DATA)
+CLEANFILES = $(appman_DATA)
 
 SED = sed
 
@@ -121,7 +110,7 @@ MAN_SUBSTS = \
 	-e 's|__miscmansuffix__|$(MISC_MAN_SUFFIX)|g' \
 	-e 's|__filemansuffix__|$(FILE_MAN_SUFFIX)|g'
 
-SUFFIXES += .$(APP_MAN_SUFFIX) .man
+SUFFIXES = .$(APP_MAN_SUFFIX) .man
 
 .man.$(APP_MAN_SUFFIX):
 	sed $(MAN_SUBSTS) < $< > $@
