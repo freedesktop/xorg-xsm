@@ -30,8 +30,6 @@ in this Software without prior written authorization from The Open Group.
 #include "restart.h"
 #include "saveutil.h"
 
-extern char **environ;
-
 
 /*
  * Until XSMP provides a better way to know which clients are "managers",

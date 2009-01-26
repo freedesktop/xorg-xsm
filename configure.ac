@@ -31,50 +31,33 @@ AM_CONFIG_HEADER(config.h)
 AC_PROG_CC
 AC_PROG_INSTALL
 
-if [[ -z $RSH ]] ; then
-   AC_PATH_PROG(RSH,rsh)
-fi
-if [[ -z $RSH ]] ; then
-   AC_PATH_PROG(RSH,rcmd)
-fi
-if [[ -z $RSH ]] ; then
-   AC_PATH_PROG(RSH,remsh)
-fi
-if [[ -z $RSH ]] ; then
-   AC_MSG_ERROR(No rsh like program found)
-fi
-
-#if !defined(RshCmd)
-#if SystemV
-#ifdef HPArchitecture
-#define RshCmd remsh
-#else
-#define RshCmd rcmd
-#endif
-#else
-#define RshCmd rsh
-#endif
-#endif
+AC_ARG_WITH(rsh, AS_HELP_STRING([--with-rsh=PATH],
+	    [Rsh command to use (default: $bindir/ssh)]),
+	    [ rsh="$withval"],
+	    [ rsh=${bindir}/ssh ])
+RSH=$rsh
+AC_SUBST(RSH)
 
 AC_CHECK_FUNC([mkstemp], 
-   AC_DEFINE(HAS_MKSTEMP,1,[Define to 1 if you have the `mkstemp' function.]))
+   AC_DEFINE(HAS_MKSTEMP,1,[Define to 1 if you have the 'mkstemp' function.]))
 AC_CHECK_FUNC([putenv], [],
-   AC_DEFINE(NOPUTENV,1,[Define to 1 if you DO NOT have the `putenv' function.]))
+   AC_DEFINE(NOPUTENV,1,[Define to 1 if you DO NOT have the 'putenv' function.]))
 
 # Checks for pkg-config packages
-PKG_CHECK_MODULES(XSM, x11 xt ice sm)
-PKG_CHECK_MODULES(XSM_XAW, xaw7)
-XSM_CFLAGS="$XSM_XAW_CFLAGS $XSM_CFLAGS"
-XSM_LIBS="$XSM_XAW_LIBS $XSM_LIBS"
-
+PKG_CHECK_MODULES(XSM, x11 xt ice sm xaw7)
+XSM_CFLAGS="$CWARNFLAGS $XSM_CFLAGS"
+XSM_LIBS="$XSM_LIBS"
+xt_appdefaultdir=$(pkg-config --variable=appdefaultdir xt)
+AC_ARG_WITH(appdefaultdir,
+	AC_HELP_STRING([--with-appdefaultdir=<pathname>],
+	  [specify directory for app-defaults files (default is autodetected)]),
+	[appdefaultdir="$withval"], [appdefaultdir="${xt_appdefaultdir}"])
 AC_SUBST(XSM_CFLAGS)
 AC_SUBST(XSM_LIBS)
-
-PKG_CHECK_MODULES(APPDEFS, xt)
-appdefaultdir=$(pkg-config --variable=appdefaultdir xt)
 AC_SUBST(appdefaultdir)
 
 XORG_MANPAGE_SECTIONS
 XORG_RELEASE_VERSION
+XORG_CHANGELOG
 
 AC_OUTPUT([Makefile])

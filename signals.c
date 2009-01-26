@@ -102,9 +102,6 @@ in this Software without prior written authorization from The Open Group.
 
 int checkpoint_from_signal = 0;
 
-extern XtSignalId sig_term_id, sig_usr1_id;
-extern Bool wantShutdown;
-
 
 static SIGVAL
 Signal(int sig, SIGVAL (*handler)(int))

@@ -32,12 +32,7 @@ in this Software without prior written authorization from The Open Group.
 #include "xsm.h"
 #include "log.h"
 
-#include <X11/ICE/ICEutil.h>
-
 static char 		*format_rstart_env(char *str);
-
-extern IceAuthDataEntry	*authDataEntries;
-extern int		numTransports;
 
 
 void

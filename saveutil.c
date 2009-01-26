@@ -28,10 +28,9 @@ in this Software without prior written authorization from The Open Group.
 #include "xsm.h"
 #include "log.h"
 #include "saveutil.h"
+#include "info.h"
 
-char 		 session_save_file[PATH_MAX];
-
-extern Widget manualRestartCommands;
+static char 		 session_save_file[PATH_MAX];
 
 
 void

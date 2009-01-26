@@ -43,26 +43,26 @@ in this Software without prior written authorization from The Open Group.
 static Pixmap checkBitmap;
 
 Widget clientInfoPopup;
-Widget   clientInfoForm;
-Widget     viewPropButton;
-Widget	   cloneButton;
-Widget	   killClientButton;
-Widget	   clientInfoDoneButton;
-Widget	   restartHintButton;
-Widget	     restartHintMenu;
-Widget		restartIfRunning;
-Widget		restartAnyway;
-Widget		restartImmediately;
-Widget		restartNever;
-Widget     clientListWidget;
-Widget	   noClientsLabel;
-Widget	   manualRestartLabel;
-Widget	   manualRestartCommands;
+static Widget   clientInfoForm;
+static Widget     viewPropButton;
+static Widget	   cloneButton;
+static Widget	   killClientButton;
+static Widget	   clientInfoDoneButton;
+static Widget	   restartHintButton;
+static Widget	     restartHintMenu;
+static Widget		restartIfRunning;
+static Widget		restartAnyway;
+static Widget		restartImmediately;
+static Widget		restartNever;
+Widget clientListWidget;
+static Widget noClientsLabel;
+Widget manualRestartLabel;
+Widget manualRestartCommands;
 
 Widget clientPropPopup;
-Widget   clientPropForm;
-Widget     clientPropDoneButton;
-Widget     clientPropTextWidget;
+static Widget clientPropForm;
+static Widget clientPropDoneButton;
+static Widget clientPropTextWidget;
 
 
 
@@ -815,8 +815,8 @@ create_client_info_popup(void)
 	XtNleft, XawChainLeft,
 	XtNright, XawChainLeft,
         NULL);
-    
-    XtAddCallback (viewPropButton, XtNcallback, ViewPropXtProc, 0);
+
+    XtAddCallback (viewPropButton, XtNcallback, ViewPropXtProc, NULL);
 
 
     cloneButton = XtVaCreateManagedWidget (
@@ -828,8 +828,8 @@ create_client_info_popup(void)
 	XtNleft, XawChainLeft,
 	XtNright, XawChainLeft,
         NULL);
-    
-    XtAddCallback (cloneButton, XtNcallback, CloneXtProc, 0);
+
+    XtAddCallback (cloneButton, XtNcallback, CloneXtProc, NULL);
 
 
     killClientButton = XtVaCreateManagedWidget (
@@ -841,8 +841,8 @@ create_client_info_popup(void)
 	XtNleft, XawChainLeft,
 	XtNright, XawChainLeft,
         NULL);
-    
-    XtAddCallback (killClientButton, XtNcallback, KillClientXtProc, 0);
+
+    XtAddCallback (killClientButton, XtNcallback, KillClientXtProc, NULL);
 
 
     restartHintButton = XtVaCreateManagedWidget (
@@ -880,10 +880,10 @@ create_client_info_popup(void)
 	XtNleftMargin, 18,
 	NULL);
 
-    XtAddCallback (restartIfRunning, XtNcallback, RestartHintXtProc, 0);
-    XtAddCallback (restartAnyway, XtNcallback, RestartHintXtProc, 0);
-    XtAddCallback (restartImmediately, XtNcallback, RestartHintXtProc, 0);
-    XtAddCallback (restartNever, XtNcallback, RestartHintXtProc, 0);
+    XtAddCallback (restartIfRunning, XtNcallback, RestartHintXtProc, NULL);
+    XtAddCallback (restartAnyway, XtNcallback, RestartHintXtProc, NULL);
+    XtAddCallback (restartImmediately, XtNcallback, RestartHintXtProc, NULL);
+    XtAddCallback (restartNever, XtNcallback, RestartHintXtProc, NULL);
 
 
     clientInfoDoneButton = XtVaCreateManagedWidget (
@@ -896,7 +896,7 @@ create_client_info_popup(void)
 	XtNright, XawChainLeft,
         NULL);
 
-    XtAddCallback (clientInfoDoneButton, XtNcallback, listDoneXtProc, 0);
+    XtAddCallback (clientInfoDoneButton, XtNcallback, listDoneXtProc, NULL);
 
 
     clientListWidget = XtVaCreateManagedWidget (
@@ -910,7 +910,7 @@ create_client_info_popup(void)
 	XtNbottom, XawChainTop,
 	NULL);
 
-    XtAddCallback (clientListWidget, XtNcallback, ClientListXtProc, 0);
+    XtAddCallback (clientListWidget, XtNcallback, ClientListXtProc, NULL);
 
     noClientsLabel = XtVaCreateWidget (
 	"noClientsLabel", labelWidgetClass, clientInfoForm,
@@ -971,7 +971,7 @@ create_client_info_popup(void)
 	XtNright, XawChainLeft,
         NULL);
 
-    XtAddCallback (clientPropDoneButton, XtNcallback, clientPropDoneXtProc, 0);
+    XtAddCallback (clientPropDoneButton, XtNcallback, clientPropDoneXtProc, NULL);
 
 
     clientPropTextWidget = XtVaCreateManagedWidget (
