@@ -28,6 +28,12 @@ AM_MAINTAINER_MODE
 
 AM_CONFIG_HEADER(config.h)
 
+# Require xorg-macros: XORG_DEFAULT_OPTIONS
+m4_ifndef([XORG_MACROS_VERSION],
+          [m4_fatal([must install xorg-macros 1.3 or later before running autoconf/autogen])])
+XORG_MACROS_VERSION(1.3)
+XORG_DEFAULT_OPTIONS
+
 AC_PROG_CC
 AC_PROG_INSTALL
 
@@ -56,8 +62,5 @@ AC_SUBST(XSM_CFLAGS)
 AC_SUBST(XSM_LIBS)
 AC_SUBST(appdefaultdir)
 
-XORG_MANPAGE_SECTIONS
-XORG_RELEASE_VERSION
-XORG_CHANGELOG
 
 AC_OUTPUT([Makefile])
