@@ -53,7 +53,7 @@ AC_CHECK_FUNC([putenv], [],
 PKG_CHECK_MODULES(XSM, x11 xt ice sm xaw7)
 XSM_CFLAGS="$CWARNFLAGS $XSM_CFLAGS"
 XSM_LIBS="$XSM_LIBS"
-xt_appdefaultdir=$(pkg-config --variable=appdefaultdir xt)
+xt_appdefaultdir=`$PKG_CONFIG --variable=appdefaultdir xt`
 AC_ARG_WITH(appdefaultdir,
 	AC_HELP_STRING([--with-appdefaultdir=<pathname>],
 	  [specify directory for app-defaults files (default is autodetected)]),
