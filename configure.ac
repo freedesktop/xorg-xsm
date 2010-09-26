@@ -34,9 +34,6 @@ m4_ifndef([XORG_MACROS_VERSION],
 XORG_MACROS_VERSION(1.8)
 XORG_DEFAULT_OPTIONS
 
-AC_PROG_CC
-AC_PROG_INSTALL
-
 AC_ARG_WITH(rsh, AS_HELP_STRING([--with-rsh=PATH],
 	    [Rsh command to use (default: $bindir/ssh)]),
 	    [ rsh="$withval"],
@@ -51,14 +48,12 @@ AC_CHECK_FUNC([putenv], [],
 
 # Checks for pkg-config packages
 PKG_CHECK_MODULES(XSM, x11 xt ice sm xaw7)
-XSM_LIBS="$XSM_LIBS"
+
 xt_appdefaultdir=`$PKG_CONFIG --variable=appdefaultdir xt`
 AC_ARG_WITH(appdefaultdir,
 	AC_HELP_STRING([--with-appdefaultdir=<pathname>],
 	  [specify directory for app-defaults files (default is autodetected)]),
 	[appdefaultdir="$withval"], [appdefaultdir="${xt_appdefaultdir}"])
-AC_SUBST(XSM_CFLAGS)
-AC_SUBST(XSM_LIBS)
 AC_SUBST(appdefaultdir)
 
 
