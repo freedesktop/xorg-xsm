@@ -214,7 +214,7 @@ extern FILE *fdopen(int, char const *);
 #endif
 
 #if defined(sun) && defined(SVR4)
-extern int System();
+extern int System(char *s);
 #define system(s) System(s)
 #endif
 
