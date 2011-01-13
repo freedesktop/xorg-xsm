@@ -559,9 +559,6 @@ UpdateClientList(void)
 	else
 	    hint = "";
 
-	clientInfo = (String) XtMalloc (strlen (progName) +
-	    extra1 + extra2 + 3 + strlen (hostname) + 3 + strlen (hint) + 1);
-
 	for (k = 0; k < extra1; k++)
 	    extraBuf1[k] = ' ';
 	extraBuf1[extra1] = '\0';
@@ -570,7 +567,7 @@ UpdateClientList(void)
 	    extraBuf2[k] = ' ';
 	extraBuf2[extra2] = '\0';
 
-	sprintf (clientInfo, "%s%s (%s%s)   %s", progName, extraBuf1,
+	XtAsprintf (&clientInfo, "%s%s (%s%s)   %s", progName, extraBuf1,
 	    hostname, extraBuf2, hint);
 
 	clientListRecs[i] = client;
