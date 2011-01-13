@@ -340,7 +340,7 @@ applications on remote machines.  Currently, \fIxsm\fP supports the
 machine \fBX\fR, machine \fBX\fR must have \fIrstart\fP installed.  In
 the future, additional remote execution protocols may be supported.
 .SH SEE ALSO
-smproxy(1), rstart(1)
+smproxy(__appmansuffix__), rstart(__appmansuffix__)
 .SH AUTHORS
 Ralph Mor, X Consortium
 .br
