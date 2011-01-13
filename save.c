@@ -420,7 +420,7 @@ SaveOkXtProc(Widget w, XtPointer client_data, XtPointer callData)
 	    {
 		name_locked = False;
 
-		sprintf (label, "Another session by the name '%s' already exists.\nWould you like to overwrite it?", name);
+		snprintf (label, sizeof(label), "Another session by the name '%s' already exists.\nWould you like to overwrite it?", name);
 
 		XtManageChild (nameInUseOverwriteButton);
 

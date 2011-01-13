@@ -226,7 +226,7 @@ DisplayProps(ClientRec *client)
 	    XtNstring, buffer.bufStart,
 	    NULL);
 
-	sprintf (buffer.bufStart,
+	snprintf (buffer.bufStart, buffer.bufSize,
 	    "SM Properties : %s", clientListNames[index]);
 
 	ptr = Strstr (buffer.bufStart, ")   Restart");
