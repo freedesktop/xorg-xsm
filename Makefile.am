@@ -22,7 +22,7 @@
 SUBDIRS = man
 bin_PROGRAMS = xsm
 
-SYSTEM_INIT_DIR = $(libdir)/X11/xsm
+SYSTEM_INIT_DIR = $(sysconfdir)/X11/xsm
 
 AM_CFLAGS = $(XSM_CFLAGS) $(CWARNFLAGS) -DRSHCMD=\"@RSH@\" \
 	-DSYSTEM_INIT_FILE=\"$(SYSTEM_INIT_DIR)/system.xsm\"
