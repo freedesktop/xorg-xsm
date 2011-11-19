@@ -399,7 +399,7 @@ PropertyChangeXtHandler(Widget w, XtPointer closure, XEvent *event,
 
 
 void
-SetWM_DELETE_WINDOW(Widget widget, String delAction)
+SetWM_DELETE_WINDOW(Widget widget, const _XtString delAction)
 {
     char translation[64];
 
@@ -1190,7 +1190,7 @@ NewClientProc(SmsConn smsConn, SmPointer managerData, unsigned long *maskRet,
 
     if (!newClient)
     {
-	char *str = "Memory allocation failed";
+	const char *str = "Memory allocation failed";
 
 	if ((*failureReasonRet = (char *) XtMalloc (strlen (str) + 1)) != NULL)
 	    strcpy (*failureReasonRet, str);

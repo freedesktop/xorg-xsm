@@ -101,7 +101,7 @@ typedef struct {
 
 
 static void
-AppendStr(Buffer *buffer, char *str)
+AppendStr(Buffer *buffer, const char *str)
 {
     int len = strlen (str);
 
@@ -506,7 +506,7 @@ UpdateClientList(void)
     {
 	ClientRec *client = (ClientRec *) cl->thing;
 	int extra1, extra2;
-	char *hint;
+	const char *hint;
 
 	progName = NULL;
 	restart_service_prop = NULL;

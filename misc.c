@@ -95,7 +95,7 @@ putenv(char *s)
 
 
 int
-strbw(char *a, char *b)
+strbw(const char *a, const char *b)
 {
     return !strncmp (a, b, strlen (b));
 }

@@ -269,9 +269,9 @@ DoSave(int saveType, int interactStyle, Bool fast)
 {
     ClientRec	*client;
     List	*cl;
-    char	*_saveType;
-    char	*_shutdown;
-    char	*_interactStyle;
+    const char	*_saveType;
+    const char	*_shutdown;
+    const char	*_interactStyle;
 
     if (saveType == SmSaveLocal)
 	_saveType = "Local";

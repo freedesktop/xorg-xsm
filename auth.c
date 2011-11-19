@@ -82,10 +82,10 @@ write_iceauth(FILE *addfp, FILE *removefp, IceAuthDataEntry *entry)
 
 #ifndef HAS_MKSTEMP
 static char *
-unique_filename(char *path, char *prefix)
+unique_filename(const char *path, const char *prefix)
 #else
 static char *
-unique_filename(char *path, char *prefix, int *pFd)
+unique_filename(const char *path, const char *prefix, int *pFd)
 #endif
 {
 #ifndef HAS_MKSTEMP
@@ -133,7 +133,7 @@ SetAuthentication(int count, IceListenObj *listenObjs,
 {
     FILE	*addfp = NULL;
     FILE	*removefp = NULL;
-    char	*path;
+    const char	*path;
     int		original_umask;
     char	command[256];
     int		i;
@@ -143,10 +143,10 @@ SetAuthentication(int count, IceListenObj *listenObjs,
 
     original_umask = umask (0077);	/* disallow non-owner access */
 
-    path = (char *) getenv ("SM_SAVE_DIR");
+    path = getenv ("SM_SAVE_DIR");
     if (!path)
     {
-	path = (char *) getenv ("HOME");
+	path = getenv ("HOME");
 	if (!path)
 	    path = ".";
     }

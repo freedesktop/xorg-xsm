@@ -78,13 +78,13 @@ GetSessionNames(int *count_ret, String **short_names_ret,
 {
     DIR *dir;
     struct dirent *entry;
-    char *path;
+    const char *path;
     int count;
 
-    path = (char *) getenv ("SM_SAVE_DIR");
+    path = getenv ("SM_SAVE_DIR");
     if (!path)
     {
-	path = (char *) getenv ("HOME");
+	path = getenv ("HOME");
 	if (!path)
 	    path = ".";
     }
