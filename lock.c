@@ -132,7 +132,7 @@ GetLockId(const char *session_name)
     }
 
     buf[0] = '\0';
-    fscanf (fp, "%s\n", buf);
+    fscanf (fp, "%255s\n", buf);
     ret = XtNewString (buf);
 
     fclose (fp);
