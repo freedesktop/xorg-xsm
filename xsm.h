@@ -208,11 +208,6 @@ extern void nomem(void);
 
 #define Strstr strstr
 
-/* Fix ISC brain damage.  When using gcc fdopen isn't declared in <stdio.h>. */
-#if defined(ISC) && __STDC__
-extern FILE *fdopen(int, char const *);
-#endif
-
 #if defined(sun) && defined(SVR4)
 extern int System(char *s);
 #define system(s) System(s)
