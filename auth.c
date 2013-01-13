@@ -30,7 +30,7 @@ in this Software without prior written authorization from The Open Group.
 #include <X11/ICE/ICEutil.h>
 #include "auth.h"
 
-#ifdef HAS_MKSTEMP
+#ifdef HAVE_MKSTEMP
 #include <unistd.h>
 #endif
 #include <sys/types.h>
@@ -80,7 +80,7 @@ write_iceauth(FILE *addfp, FILE *removefp, IceAuthDataEntry *entry)
 
 
 
-#ifndef HAS_MKSTEMP
+#ifndef HAVE_MKSTEMP
 static char *
 unique_filename(const char *path, const char *prefix)
 #else
@@ -88,7 +88,7 @@ static char *
 unique_filename(const char *path, const char *prefix, int *pFd)
 #endif
 {
-#ifndef HAS_MKSTEMP
+#ifndef HAVE_MKSTEMP
 #ifndef X_NOT_POSIX
     return ((char *) tempnam (path, prefix));
 #else
@@ -137,7 +137,7 @@ SetAuthentication(int count, IceListenObj *listenObjs,
     int		original_umask;
     char	command[256];
     int		i;
-#ifdef HAS_MKSTEMP
+#ifdef HAVE_MKSTEMP
     int         fd;
 #endif
 
@@ -150,7 +150,7 @@ SetAuthentication(int count, IceListenObj *listenObjs,
 	if (!path)
 	    path = ".";
     }
-#ifndef HAS_MKSTEMP
+#ifndef HAVE_MKSTEMP
     if ((addAuthFile = unique_filename (path, ".xsm")) == NULL)
 	goto bad;
 

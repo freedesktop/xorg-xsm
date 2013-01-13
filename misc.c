@@ -28,7 +28,7 @@ in this Software without prior written authorization from The Open Group.
 #include "xsm.h"
 
 
-#ifdef NOPUTENV
+#ifndef HAVE_PUTENV
 /*
  * define our own putenv() if the system doesn't have one.
  * putenv(s): place s (a string of the form "NAME=value") in

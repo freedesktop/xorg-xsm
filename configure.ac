@@ -45,10 +45,7 @@ AC_ARG_WITH(rsh, AS_HELP_STRING([--with-rsh=PATH],
 RSH=$rsh
 AC_SUBST(RSH)
 
-AC_CHECK_FUNC([mkstemp], 
-   AC_DEFINE(HAS_MKSTEMP,1,[Define to 1 if you have the 'mkstemp' function.]))
-AC_CHECK_FUNC([putenv], [],
-   AC_DEFINE(NOPUTENV,1,[Define to 1 if you DO NOT have the 'putenv' function.]))
+AC_CHECK_FUNCS([mkstemp putenv])
 
 # Checks for pkg-config packages
 PKG_CHECK_MODULES(XSM, [x11 xt > 1.0.99 ice sm xaw7])
