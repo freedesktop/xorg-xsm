@@ -134,7 +134,7 @@ SetAuthentication(int count, IceListenObj *listenObjs,
     FILE	*addfp = NULL;
     FILE	*removefp = NULL;
     const char	*path;
-    int		original_umask;
+    mode_t	original_umask;
     char	command[256];
     int		i;
 #ifdef HAVE_MKSTEMP
