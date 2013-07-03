@@ -192,7 +192,7 @@ main(int argc, char *argv[])
 
     usage:
 	fprintf (stderr,
-	 "usage: xsm [-display display] [-session session_name] [-verbose]\n");
+	 "Usage: xsm [-display display] [-session sessionName] [-verbose]\n");
 	exit (1);
     }
 
