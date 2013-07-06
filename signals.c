@@ -130,8 +130,7 @@ sig_child_handler (int sig)
 {
     int pid, olderrno = errno;
 
-#if !defined(USE_POSIX_WAIT) && (defined(USE_SYSV_SIGNALS) && \
-    (defined(CRAY) || !defined(SIGTSTP)))
+#if !defined(USE_POSIX_WAIT) && defined(USE_SYSV_SIGNALS) && !defined(SIGTSTP)
     wait (NULL);
 #endif
 
@@ -151,7 +150,7 @@ sig_child_handler (int sig)
 #ifdef USE_POSIX_WAIT
 	pid = waitpid (-1, NULL, WNOHANG);
 #else
-#if defined(USE_SYSV_SIGNALS) && (defined(CRAY) || !defined(SIGTSTP))
+#if defined(USE_SYSV_SIGNALS) && !defined(SIGTSTP)
 	/* cannot do non-blocking wait */
 	pid = 0;
 #else
@@ -260,7 +259,7 @@ execute_system_command (char *s)
 
     Signal (SIGCHLD, sig_child_handler);
 
-#if !(defined(USE_SYSV_SIGNALS) && (defined(CRAY) || !defined(SIGTSTP)))
+#if !(defined(USE_SYSV_SIGNALS) && !defined(SIGTSTP))
     do
     {
 	union wait status;
