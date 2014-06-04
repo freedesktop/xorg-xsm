@@ -175,12 +175,20 @@ main(int argc, char *argv[])
 	    switch (argv[i][1])
 	    {
 	    case 'd':					/* -display */
-		if (++i >= argc) goto usage;
+		if (++i >= argc) {
+		    fprintf (stderr, "%s: -display requires an argument\n",
+			     argv[0]);
+		    goto usage;
+		}
 		cmd_line_display = (char *) XtNewString (argv[i]);
 		continue;
 
 	    case 's':					/* -session */
-		if (++i >= argc) goto usage;
+		if (++i >= argc) {
+		    fprintf (stderr, "%s: -session requires an argument\n",
+			     argv[0]);
+		    goto usage;
+		}
 		session_name = XtNewString (argv[i]);
 		continue;
 
@@ -189,6 +197,8 @@ main(int argc, char *argv[])
 		continue;
 	    }
 	}
+
+	fprintf (stderr, "%s: unrecognized argument '%s'\n", argv[0], argv[i]);
 
     usage:
 	fprintf (stderr,
